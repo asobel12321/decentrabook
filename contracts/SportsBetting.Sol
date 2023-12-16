@@ -1,0 +1,74 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+// Define the smart contract named SportsBetting
+contract SportsBetting {
+    // State variable to store the address of the contract owner
+    address public owner;
+
+    // Define a struct named Bet to represent a betting contract
+    struct Bet {
+        uint256 amount; // Amount of ether (in wei) bet by the participant
+        address payable participant; // Address of the participant who created the bet
+        bool isAccepted; // Flag to track if the bet is accepted by another user
+        address payable acceptor; // Address of the participant who accepts the bet
+        bool isFinished; // Flag to track if the bet has been settled
+        address payable winner; // Address of the winner of the bet
+    }
+
+    // A dynamic array to store all the bets
+    Bet[] public bets;
+
+    // Constructor to set the contract deployer as the owner
+    constructor() {
+        owner = msg.sender;
+    }
+
+    // Function to create a new bet. It's a payable function so it can accept Ether
+    function createBet() public payable {
+        require(msg.value > 0, "Bet amount must be greater than 0");
+
+        // Create a new bet instance
+        Bet memory newBet = Bet({
+            amount: msg.value, // Set the bet amount to the value sent with the transaction
+            participant: payable(msg.sender), // Set the participant to the sender of the transaction
+            isAccepted: false, // Initially, the bet is not accepted
+            acceptor: payable(address(0)), // No acceptor when the bet is created
+            isFinished: false, // The bet is not settled initially
+            winner: payable(address(0)) // No winner when the bet is created
+        });
+
+        // Add the new bet to the bets array
+        bets.push(newBet);
+    }
+
+    // Function to accept an existing bet
+    function acceptBet(uint256 betIndex) public payable {
+        Bet storage bet = bets[betIndex]; // Retrieve the bet from the array
+
+        require(msg.value == bet.amount, "Bet amount must match"); // Check if the sent Ether matches the bet amount
+        require(!bet.isAccepted, "Bet is already accepted"); // Ensure the bet hasn't been accepted already
+        
+        bet.acceptor = payable(msg.sender); // Set the acceptor to the sender of the transaction
+        bet.isAccepted = true; // Mark the bet as accepted
+    }
+
+    // Function to settle a bet, only callable by the contract owner
+    function settleBet(uint256 betIndex, address winnerAddress) public {
+        require(msg.sender == owner, "Only the owner can settle bets");
+        Bet storage bet = bets[betIndex]; // Retrieve the bet from the array
+
+        require(bet.isAccepted, "Bet is not yet accepted"); // Ensure the bet has been accepted
+        require(!bet.isFinished, "Bet is already settled"); // Ensure the bet hasn't been settled already
+        require(winnerAddress == bet.participant || winnerAddress == bet.acceptor, "Invalid winner address"); // Ensure the winner is either the participant or the acceptor
+
+        bet.winner = payable(winnerAddress); // Set the winner of the bet
+        bet.isFinished = true; // Mark the bet as settled
+        bet.winner.transfer(bet.amount * 2); // Transfer the total bet amount to the winner
+    }
+
+    // Function to get the total number of bets
+    function getBetCount() public view returns (uint256) {
+        return bets.length;
+    }
+}

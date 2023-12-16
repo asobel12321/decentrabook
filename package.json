@@ -1,0 +1,25 @@
+{
+  "name": "decentrabook",
+  "version": "1.0.0",
+  "description": "trustless smart contract marketplace",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asobel12321/decentrabook.git"
+  },
+  "keywords": [
+    "ethereum",
+    "smart",
+    "contract",
+    "marketplace"
+  ],
+  "author": "Alex Sobel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asobel12321/decentrabook/issues"
+  },
+  "homepage": "https://github.com/asobel12321/decentrabook#readme"
+}
