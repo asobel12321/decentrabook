@@ -15,19 +15,31 @@ Providing a secure and decentralized betting environment.
 Empowering users with direct control over their betting activities.
 
 Tech Stack
+
 Blockchain Platform: Ethereum
+
 Smart Contract Language: Solidity
+
 Frontend Development:
+
 Frameworks: React.js
+
 Web3 Integration: Web3.js for blockchain interaction
+
 Backend Development:
+
 Environment: Node.js
+
 Database: MongoDB for data persistence
+
 Testing and Development Tools:
+
 Truffle Suite: For smart contract deployment and testing
 
 Ganache: Local blockchain for development and testing
+
 Version Control System: Git, hosted on GitHub
+
 Additional Tools:
 
 Development Setup:
