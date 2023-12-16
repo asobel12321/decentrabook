@@ -1,5 +1,7 @@
 Decentralized Sports Betting Platform
+
 Project Overview
+
 This project aims to create a decentralized platform for sports betting, utilizing blockchain technology to facilitate secure, transparent, and trustless betting transactions. 
 By leveraging smart contracts on the Ethereum blockchain, our platform allows users to engage in direct peer-to-peer betting without the need for intermediaries. 
 This approach significantly reduces the traditional fees ("juice") associated with sports betting, thereby offering a fairer and more equitable betting experience.
